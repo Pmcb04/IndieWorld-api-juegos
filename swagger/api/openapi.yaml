@@ -1,0 +1,322 @@
+openapi: 3.0.0
+info:
+  title: API de Gestión de Juegos
+  description: API para la gestión de juegos en una plataforma de videojuegos
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Devgram/APIJuegos/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/Devgram/APIGuardadoNube/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/Devgram/APIUsuarios/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/Devgram/Practica2/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /juegos:
+    get:
+      tags:
+      - Juegos
+      summary: Obtener lista de juegos
+      description: Obtiene la lista de todos los juegos disponibles.
+      operationId: obtenerJuegos
+      responses:
+        "200":
+          description: Lista de juegos obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Juego'
+                x-content-type: application/json
+      x-swagger-router-controller: Juegos
+    post:
+      tags:
+      - Juegos
+      summary: Crear un nuevo juego
+      description: Crea un nuevo juego en la plataforma.
+      operationId: crearJuego
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Juego'
+        required: true
+      responses:
+        "201":
+          description: Juego creado exitosamente
+        "400":
+          description: Error en la solicitud
+      x-swagger-router-controller: Juegos
+  /juegos/{id_juego}:
+    get:
+      tags:
+      - Juegos
+      summary: Obtener un juego por ID
+      description: Obtiene los detalles de un juego por su ID.
+      operationId: obtenerJuego
+      parameters:
+      - name: id_juego
+        in: path
+        description: "ID del juego a consultar, actualizar o eliminar"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Detalles del juego obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Juego'
+        "404":
+          description: Juego no encontrado
+      x-swagger-router-controller: Juegos
+    put:
+      tags:
+      - Juegos
+      summary: Actualizar un juego por ID
+      description: Actualiza los detalles de un juego por su ID.
+      operationId: actualizarJuego
+      parameters:
+      - name: id_juego
+        in: path
+        description: "ID del juego a consultar, actualizar o eliminar"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Juego'
+        required: true
+      responses:
+        "200":
+          description: Juego actualizado correctamente
+        "404":
+          description: Juego no encontrado
+        "400":
+          description: Error en la solicitud
+      x-swagger-router-controller: Juegos
+    delete:
+      tags:
+      - Juegos
+      summary: Eliminar un juego por ID
+      description: Elimina un juego por su ID.
+      operationId: eliminarJuego
+      parameters:
+      - name: id_juego
+        in: path
+        description: "ID del juego a consultar, actualizar o eliminar"
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Juego eliminado correctamente
+        "404":
+          description: Juego no encontrado
+        "400":
+          description: Error en la solicitud
+      x-swagger-router-controller: Juegos
+  /juegos/recomendados:
+    get:
+      tags:
+      - Juegos
+      summary: Obtener juegos recomendados
+      description: Obtiene una lista de juegos recomendados para el usuario.
+      operationId: obtenerJuegosRecomendados
+      parameters:
+      - name: id_usuario
+        in: query
+        description: ID del usuario para recomendaciones personalizadas
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Lista de juegos recomendados obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Juego'
+                x-content-type: application/json
+        "400":
+          description: Error en la solicitud
+      x-swagger-router-controller: Juegos
+  /juegos/{id_juego}/descargar:
+    get:
+      tags:
+      - Juegos
+      summary: Descargar juego por ID
+      description: Descarga un juego específico por su ID.
+      operationId: descargarJuego
+      parameters:
+      - name: id_juego
+        in: path
+        description: ID del juego a descargar
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Juego descargado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                x-content-type: application/json
+        "404":
+          description: Juego no encontrado
+        "400":
+          description: Error en la solicitud
+      x-swagger-router-controller: Juegos
+  /juegos/{id_juego}/ejecutar:
+    post:
+      tags:
+      - Juegos
+      summary: Ejecutar juego por ID
+      description: Ejecuta un juego específico por su ID.
+      operationId: ejecutarJuego
+      parameters:
+      - name: id_juego
+        in: path
+        description: ID del juego a ejecutar
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ejecucion'
+        required: true
+      responses:
+        "200":
+          description: Juego ejecutado correctamente
+        "404":
+          description: Juego no encontrado
+        "400":
+          description: Error en la solicitud
+      x-swagger-router-controller: Juegos
+components:
+  schemas:
+    Juego:
+      required:
+      - categoria
+      - desarrollador
+      - descripcion
+      - id_juego
+      - nombre
+      - precio
+      - url_descarga
+      type: object
+      properties:
+        id_juego:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        desarrollador:
+          type: string
+        descripcion:
+          type: string
+        categoria:
+          type: string
+        precio:
+          type: number
+        url_descarga:
+          type: string
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+      example:
+        descripcion: descripcion
+        precio: 6.027456183070403
+        desarrollador: desarrollador
+        reviews:
+        - contenido: contenido
+          id_usuario: 5
+          id_review: 1
+          valoracion: valoracion
+          id_juego: 5
+          fecha_publicacion: fecha_publicacion
+        - contenido: contenido
+          id_usuario: 5
+          id_review: 1
+          valoracion: valoracion
+          id_juego: 5
+          fecha_publicacion: fecha_publicacion
+        categoria: categoria
+        id_juego: 0
+        nombre: nombre
+        url_descarga: url_descarga
+    Review:
+      required:
+      - contenido
+      - fecha_publicacion
+      - id_juego
+      - id_review
+      - id_usuario
+      - valoracion
+      type: object
+      properties:
+        id_review:
+          type: integer
+          format: int64
+        id_usuario:
+          type: integer
+          format: int64
+        id_juego:
+          type: integer
+          format: int64
+        fecha_publicacion:
+          type: string
+        contenido:
+          type: string
+        valoracion:
+          type: string
+      example:
+        contenido: contenido
+        id_usuario: 5
+        id_review: 1
+        valoracion: valoracion
+        id_juego: 5
+        fecha_publicacion: fecha_publicacion
+    Ejecucion:
+      required:
+      - id_juego
+      - id_usuario
+      type: object
+      properties:
+        id_usuario:
+          type: integer
+          format: int64
+        id_juego:
+          type: integer
+          format: int64
