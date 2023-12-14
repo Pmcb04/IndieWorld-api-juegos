@@ -8,6 +8,13 @@ module.exports.actualizarJuego = function actualizarJuego (req, res, next, body,
     .then(function (response) {
       utils.writeJson(res, response);
     })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    })
     .catch(function (response) {
       utils.writeJson(res, response);
     });
@@ -17,6 +24,13 @@ module.exports.crearJuego = function crearJuego (req, res, next, body) {
   Juegos.crearJuego(body)
     .then(function (response) {
       utils.writeJson(res, response);
+    })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -28,6 +42,13 @@ module.exports.descargarJuego = function descargarJuego (req, res, next, id_jueg
     .then(function (response) {
       utils.writeJson(res, response);
     })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    })
     .catch(function (response) {
       utils.writeJson(res, response);
     });
@@ -37,6 +58,13 @@ module.exports.ejecutarJuego = function ejecutarJuego (req, res, next, body, id_
   Juegos.ejecutarJuego(body, id_juego)
     .then(function (response) {
       utils.writeJson(res, response);
+    })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -48,6 +76,13 @@ module.exports.eliminarJuego = function eliminarJuego (req, res, next, id_juego)
     .then(function (response) {
       utils.writeJson(res, response);
     })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    })
     .catch(function (response) {
       utils.writeJson(res, response);
     });
@@ -57,6 +92,13 @@ module.exports.obtenerJuego = function obtenerJuego (req, res, next, id_juego) {
   Juegos.obtenerJuego(id_juego)
     .then(function (response) {
       utils.writeJson(res, response);
+    })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -68,6 +110,13 @@ module.exports.obtenerJuegos = function obtenerJuegos (req, res, next) {
     .then(function (response) {
       utils.writeJson(res, response);
     })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    })
     .catch(function (response) {
       utils.writeJson(res, response);
     });
@@ -77,6 +126,13 @@ module.exports.obtenerJuegosRecomendados = function obtenerJuegosRecomendados (r
   Juegos.obtenerJuegosRecomendados(id_usuario)
     .then(function (response) {
       utils.writeJson(res, response);
+    })
+    .catch(function(error) {
+      if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
     })
     .catch(function (response) {
       utils.writeJson(res, response);
