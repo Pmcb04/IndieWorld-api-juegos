@@ -138,3 +138,13 @@ module.exports.obtenerJuegosRecomendados = function obtenerJuegosRecomendados (r
       utils.writeJson(res, response);
     });
 };
+
+module.exports.getMetrics = function getMetrics (req, res, next) {
+  Juegos.getMetrics()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};

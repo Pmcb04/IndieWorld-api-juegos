@@ -1,5 +1,6 @@
 'use strict';
 
+const Prometheus = require('prom-client');
 /**
  * Módulo que simula operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en una API de juegos en memoria.
  * Las operaciones incluyen la actualización, creación, eliminación y obtención de detalles de juegos.
@@ -220,3 +221,14 @@ exports.obtenerJuegosRecomendados = function (id_usuario) {
 function generateJuegoId() {
   return Math.max(...juegosDB.map(juego => juego.id_juego), 0) + 1;
 }
+
+/**
+ * getMetrics
+ * Endpoint to retrieve Prometheus metrics
+ * @returns {Promise} Promise object represents the handling of the metrics endpoint
+ **/
+exports.getMetrics = function() {
+  return new Promise(function(resolve, reject) {
+    resolve(Prometheus.register.metrics())
+  });
+};
